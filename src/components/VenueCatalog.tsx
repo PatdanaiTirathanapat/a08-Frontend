@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { getVenues } from "@/libs/getVenues";
+import  getVenues from "@/libs/getVenues";
 import Card from "@/components/Card";
 
 export default async function VenueCatalog() {

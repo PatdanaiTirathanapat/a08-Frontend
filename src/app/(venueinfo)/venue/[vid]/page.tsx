@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getVenue } from "@/libs/getVenue";
+import getVenue from "@/libs/getVenue";
 
 export default function VenueDetail() {
   const { vid } = useParams();
