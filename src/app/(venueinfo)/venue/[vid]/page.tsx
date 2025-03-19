@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import getVenue from "@/libs/getVenue";
 
-export default function VenueDetail({ params }: { params: { vid?: string } }) {
+interface VenueDetailProps {
+  params: { vid?: string };
+}
+
+export default function VenueDetail({ params }: VenueDetailProps) {
   const [venue, setVenue] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
