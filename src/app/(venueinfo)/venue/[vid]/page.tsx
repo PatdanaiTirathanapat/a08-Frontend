@@ -1,27 +1,34 @@
 "use client";
+
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getVenue } from "@/libs/getVenue";
 
-const venueDetails: Record<string, { name: string; image: string }> = {
-  "001": { name: "The Bloom Pavilion", image: "/img/bloom.jpg" },
-  "002": { name: "Spark Space", image: "/img/spark.jpg" },
-  "003": { name: "The Grand Table", image: "/img/grand.jpg" },
-};
+export default function VenueDetail() {
+  const { vid } = useParams();
+  const [venue, setVenue] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (vid) {
+      getVenue(vid as string)
+        .then((data) => {
+          setVenue(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [vid]);
 
-export default function VenueDetail({ params }: { params?: { vid?: string } }) {
-  const routeParams = useParams(); 
-  const vid = params?.vid ?? (routeParams?.vid as string | undefined);
-
-  if (!vid || !venueDetails[vid]) {
-    return <h1>Venue not found</h1>;
-  }
-
-  const venue = venueDetails[vid];
+  if (loading) return <h1>Loading...</h1>;
+  if (!venue) return <h1>Venue not found</h1>;
 
   return (
     <div>
       <h1>{venue.name}</h1>
-      <img src={venue.image} alt={venue.name} />
+      <img src={venue.picture} alt={venue.name} />
+      <p>{venue.address}, {venue.district}, {venue.province} {venue.postalcode}</p>
+      <p>Daily Rate: {venue.dailyrate} THB</p>
     </div>
   );
 }
